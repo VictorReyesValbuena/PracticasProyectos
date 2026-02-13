@@ -51,3 +51,4 @@ Gestión de datos y viabilidad estadística.
 ## 📬 Contacto
 ¿Tienes alguna duda sobre estos proyectos?
 * **Perfil de GitHub:** [@VictorReyesValbuena](https://github.com/VictorReyesValbuena)
+* **Correo electrónico:** [victor.reyes.valbuena94@gmail.com]
