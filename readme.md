@@ -6,37 +6,23 @@
 
 ## 🛠️ Proyectos Actuales
 
-### 📂 [Proyecto 1: Procesamiento de Matrices](https://github.com/VictorReyesValbuena/PracticasProyectos/tree/master/Proyecto%201)
+### 📂 [Proyecto 1: Procesamiento de Matrices]
 > **Stack:** `Python` | `Algoritmia`
 
-Desarrollo de la función `average_matrix`.
-* **Reto:** Procesar una matriz de `floats` para calcular promedios espaciales.
-* **Lógica:** Cada celda se sustituye por el promedio de sus vecinos directos y ella misma.
-* **Aplicación:** Suavizado de señales y procesamiento de imágenes.
-
 ---
 
-### 📂 [Proyecto 2: Regresión Lineal (Mínimos Cuadrados)](https://github.com/VictorReyesValbuena/PracticasProyectos/tree/master/Proyecto%202)
+### 📂 [Proyecto 2: Regresión Lineal (Mínimos Cuadrados)]
 > **Stack:** `Python` | `Numpy` | `Matplotlib` | `Scikit-Learn`
 
-Análisis exploratorio y modelado predictivo.
-* **Descripción:** Implementación desde cero del método de mínimos cuadrados.
-* **Acciones:**
-  * 🔍 Exploración profunda del Dataset.
-  * 📈 Visualización de datos con Matplotlib.
-  * 🧪 Comparativa con modelos de `sklearn`.
+---
+
+### 📂 [Proyecto 3: Análisis Estadístico y Predicción en R]
+> **Stack:** `R` | `Tidyverse` | `Statistics`
 
 ---
 
-### 📂 [Proyecto 3: Análisis Estadístico y Predicción en R](https://github.com/VictorReyesValbuena/PracticasProyectos/tree/master/Proyecto%203)
-> **Stack:** `R` | `Tidyverse` | `Statistics`
-
-Gestión de datos y viabilidad estadística.
-* **Descripción:** Trabajo completo sobre un Dataframe utilizando lenguaje R.
-* **Hitos:**
-  * 🧹 Limpieza y gestión de datos.
-  * 📊 Test de viabilidad estadística.
-  * 🔮 Modelo de regresión lineal para predicción.
+### 📂 [Proyecto 4: Mini-Proyectos y Ejercicios de Python]
+> **Stack:** `Python` | `Algoritmia`
 
 ---
 
