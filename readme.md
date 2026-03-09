@@ -26,11 +26,18 @@
 
 ---
 
+### 📂 [Proyecto 5: Práctica Data Warehouse & SQL — Análisis de Vuelos]
+> **Stack:** `SQL` | `PostgreSQL`
+
+---
+
+
 ## 📊 Tecnologías Destacadas
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![R](https://img.shields.io/badge/r-%23276DC3.svg?style=for-the-badge&logo=r&logoColor=white)
 ![Jupyter Notebook](https://img.shields.io/badge/jupyter-%23FA0F00.svg?style=for-the-badge&logo=jupyter&logoColor=white)
 ![Markdown](https://img.shields.io/badge/markdown-%23000000.svg?style=for-the-badge&logo=markdown&logoColor=white)
+![TablePlus]
 
 ---
 

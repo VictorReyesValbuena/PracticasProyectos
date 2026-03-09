@@ -1,0 +1,40 @@
+CREATE TABLE IF NOT EXISTS airlines (
+  airline_code CHAR(2),
+  name TEXT,
+  ceo TEXT,
+  founded_year INTEGER,
+  country TEXT,
+  PRIMARY KEY(airline_code)
+);
+
+
+INSERT INTO airlines (airline_code, name, ceo, founded_year, country) VALUES
+  ('IB', 'Iberia', 'Marco Sansavini', 1927, 'Spain'),
+  ('VY', 'Vueling', 'Marco Sansavini', 2004, 'Spain'),
+  ('UX', 'Air Europa', 'Jesús Nuño de la Rosa', 1986, 'Spain'),
+  ('FR', 'Ryanair', 'Michael O''Leary', 1984, 'Ireland'),
+  ('U2', 'easyJet', 'Johan Lundgren', 1995, 'United Kingdom'),
+  ('BA', 'British Airways', 'Sean Doyle', 1974, 'United Kingdom'),
+  ('LH', 'Lufthansa', 'Carsten Spohr', 1953, 'Germany'),
+  ('KL', 'KLM', 'Marjan Rintel', 1919, 'Netherlands'),
+  ('AF', 'Air France', 'Anne Rigail', 1933, 'France'),
+  ('AZ', 'ITA Airways', 'Fabio Lazzerini', 2020, 'Italy'),
+  ('TP', 'TAP Air Portugal', 'Luís Rodrigues', 1945, 'Portugal'),
+  ('LX', 'SWISS', 'Dieter Vranckx', 2002, 'Switzerland'),
+  ('SK', 'SAS Scandinavian Airlines', 'Anko van der Werff', 1946, 'Sweden'),
+  ('AA', 'American Airlines', 'Robert Isom', 1930, 'United States'),
+  ('DL', 'Delta Air Lines', 'Ed Bastian', 1925, 'United States'),
+  ('UA', 'United Airlines', 'Scott Kirby', 1926, 'United States'),
+  ('WN', 'Southwest Airlines', 'Bob Jordan', 1967, 'United States'),
+  ('EK', 'Emirates', 'Tim Clark', 1985, 'United Arab Emirates'),
+  ('QR', 'Qatar Airways', 'Badr Mohammed Al‑Meer', 1993, 'Qatar'),
+  ('TK', 'Turkish Airlines', 'Bilal Ekşi', 1933, 'Turkey'),
+  ('ET', 'Ethiopian Airlines', 'Mesfin Tasew', 1945, 'Ethiopia'),
+  ('AR', 'Aerolíneas Argentinas', 'Fabián Lombardo', 1950, 'Argentina'),
+  ('AM', 'Aeroméxico', 'Andrés Conesa', 1934, 'Mexico'),
+  ('LA', 'LATAM Airlines', 'Roberto Alvo', 2012, 'Chile'),
+  ('AV', 'Avianca', 'Adrián Neuhauser', 1919, 'Colombia'),
+  ('NH', 'All Nippon Airways', 'Shinya Katanozaka', 1952, 'Japan'),
+  ('JL', 'Japan Airlines', 'Yuji Akasaka', 1951, 'Japan'),
+  ('SQ', 'Singapore Airlines', 'Goh Choon Phong', 1947, 'Singapore'),
+  ('CX', 'Cathay Pacific', 'Ronald Lam', 1946, 'Hong Kong');
