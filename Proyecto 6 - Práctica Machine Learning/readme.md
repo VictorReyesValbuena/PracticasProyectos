@@ -1,15 +1,17 @@
 # 🏠 Airbnb Price Prediction — Práctica Machine Learning
 
-Práctica de Machine Learning sobre un dataset real de Airbnb con el objetivo de predecir el precio de los alojamientos. El proyecto se ha resuelto de **dos formas distintas**: una aproximación completamente manual y una segunda implementada con ayuda de IA (Claude), con el fin de comparar ambos enfoques metodológicos (básicamente para probar la resolucion del problema con IA)
+Práctica de Machine Learning sobre un dataset real de Airbnb con el objetivo de predecir el precio de los alojamientos. El proyecto se ha resuelto de **dos formas distintas**: una aproximación completamente manual y una segunda, a modo prueba y por estudiarlo, implementada con IA (Claude), con el fin de comparar ambos enfoques metodológicos (básicamente para probar la resolucion del problema con IA). En esa versión con IA, le he ido dando instrucciones a Claude para que fuera desarrolando tanto el eda_profiler como el documento modelos_regresion.py.
+
+EL IMPORTANTE ES EL MANUAL.
 
 ---
 
 ## 📁 Estructura del proyecto
 
 ```
-├── SIN IA/
-│   ├── EDA y limpieza datos manual.ipynb     # Análisis exploratorio y limpieza manual paso a paso
-│   └── ResolucionPractica.ipynb              # Modelado completo: preprocesamiento + 7 algoritmos
+├── **SIN IA/ Y LA QUE ES PARA CORREGIR!!**
+│   ├── **OK_EDA_y_limpieza_datos_manual.ipynb**     # Análisis exploratorio y limpieza manual paso a paso
+│   └── **OK_ResolucionPractica.ipynb**              # Modelado completo: preprocesamiento + 7 algoritmos
 │
 ├── CON IA/
 │   ├── eda_profiler.py                       # Script de EDA automatizado generado con Claude
@@ -43,7 +45,7 @@ pip install numpy pandas matplotlib seaborn scikit-learn xgboost
 ## 🔍 Descripción de la resolución
 
 ### 1. División train / test
-Lo primero antes de cualquier transformación: split 80/20 con `train_test_split` para evitar *data leakage*. Todas las transformaciones posteriores se aprenden **solo sobre train** y se replican en test.
+Lo primero antes de cualquier transformación: split 80/20 con `train_test_split` para evitar *data leakage*. Todas las transformaciones posteriores se aprenden **solo sobre train** y se replican en test (`KNNImputer`, `TargetEncoder` y `StandardScaler`)
 
 ### 2. Selección de variables
 Del dataset original se seleccionaron 15 variables relevantes para la predicción del precio:
@@ -104,26 +106,25 @@ Defino las NIterations y el learningRate e implemento validación cruzada para e
 
 Antes de pasar a las conclusiones, quiero comentar algunas cosas:
 
- -- En cuanto a la metodolía a seguir para el desarrollo de la práctica, me he centrado en ejecutar "los pasos correctos" en cada momento. Probablemente no sea la práctica más top a nivel técnico pero he intentado ir paso a paso seguiendo el orden que nos has ido diciendo en las clases sobre cómo se debe implementar el proceso de manera 100% correcta. He quitado algunas columnas de primeras que no tenían ningún valor, he hecho la división train y test, he hecho imputaciones, codificación de variables categoricas (en ambas solo haciendo el fit en train), limpieza general, graficación de variables para el estudio de Outliers, eliminación de los mismos y escalado. He intentado ser conservador en ese sentido, por eso decía que quizás no es la mejor práctica a nivel técnico ya que me he centrado en el proceso.
+ -- En cuanto a la metodología a seguir para el desarrollo de la práctica, me he centrado en ejecutar "los pasos correctos" en cada momento. Probablemente no sea la práctica más top a nivel técnico pero he intentado ir paso a paso seguiendo el orden que nos has ido diciendo en las clases sobre cómo se debe implementar el proceso de manera 100% correcta. He quitado algunas columnas de primeras que no tenían ningún valor, he hecho la división train y test, he hecho imputaciones, codificación de variables categoricas (en ambas solo haciendo el fit en train), limpieza general, graficación de variables para el estudio de Outliers, eliminación de los mismos y escalado. He intentado ser conservador en ese sentido, por eso decía que quizás no es la mejor práctica a nivel técnico ya que me he centrado en el proceso.
 
  -- Posteriormente, he implementado cada uno de los algoritmos vistos en clase intentado entender cada uno de los parámetros. Basicamente, he ido copiando cada uno de los código para cada algoritmo (no al 100% pero si la estructura general) y he ido modificando aspectos importantes para que el modelo tuviera mejor resultado, (alpha_vector, max_depth, min_samples_leaf, max_features, n_estimator y learning_rate entre otros). También he utilizando en los métodos de árboles, la graficación de la importancia de cada variable (incluso llegué a eliminar una tras ejecutar por primera vez los algoritmos). En esta parte, básicamente he intentado repasar y profundizar en el funcionamiento de cada uno de los algoritmos.
 
- -- Al final del todo, le pedí a Claude que me hiciera una tabla comparativa con las métricas **R²** y **RMSE** sobre train y test, incluyendo el gap de overfitting (ΔR²) además de los valores de RMSE.
+ -- Al final del todo, le pedí a Claude que me hiciera una tabla comparativa con las métricas **R²** y **RMSE** sobre train y test, incluyendo el gap de overfitting (ΔR²).
 
 ## 📊 Conclusiones
 
-Los modelos lineales con regularización (**Lasso** y **Ridge**) ofrecen resultados modestos pero estables, sin overfitting, y con buena interpretabilidad. Lasso resulta especialmente útil al llevar a cero los coeficientes de variables poco relevantes, confirmando la importancia de `Cleaning Fee` y `Security Deposit`.
+### Modelos lineales (Lasso / Ridge):
 
-Los modelos basados en árboles (**Random Forest**, **Bagging**, **GBM**) presentan overfitting notable a pesar de la regularización aplicada, lo que indica que el dataset —al ser datos reales de Airbnb con alta variabilidad— tiene ruido estructural difícil de modelar sin información adicional.
+Tienen un rendimiento modesto, por lo que podemos decir que la relación entre las features y la variable objetivo no se puede ajustar bien a una relación lineal. A cambio de esto, podemos ver que no existe prácticamente Overfitting.
 
-La comparativa entre la resolución manual y la automatizada con IA muestra que ambos enfoques convergen en los mismos resultados, pero la versión con IA reduce significativamente el tiempo de implementación manteniendo las buenas prácticas metodológicas.
+### Modelos basados en árboles:
 
----
+GBM es el modelo más recomendable: mejor equilibrio entre rendimiento (R² test = 0.843) y generalización (ΔR² = 0.047). En la práctica sería la primera elección.
+Luego iría Random Forest y Decision Tree ya que Bagging tiene claro Overfitting (probablemente podría retocar algo el modelo o los parámetros)
 
-## 🤖 Sobre el enfoque con IA
+### Modelo SVM:
 
-Simplemente, he ido probando con Claude desde el propio VSCode, que me hicera una EDA personalizada y un documento py que al ejecutarlo, me implementara todos los algoritmos.
-
----
+Presenta overfitting sin embargo es por los parámetros que le he definido (con los "habituales" llevaba ejecutándose 2h...)
 
 *Práctica realizada en el marco del Bootcamp de Machine Learning — KeepCoding*

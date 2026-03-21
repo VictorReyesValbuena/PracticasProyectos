@@ -1264,12 +1264,12 @@ else:
             reg_alpha=0.1,
             reg_lambda=2.0,
             verbosity=0,
-            eval_metric='rmse'
+            eval_metric='rmse',
+            early_stopping_rounds=50
         )
         xgb_c.fit(
             X_train, y_train,
             eval_set=[(X_test, y_test)],
-            early_stopping_rounds=50,
             verbose=False
         )
         print(f"    Iteración óptima (early stopping): {xgb_c.best_iteration}")
