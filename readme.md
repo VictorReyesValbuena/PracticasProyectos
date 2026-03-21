@@ -31,6 +31,20 @@
 
 ---
 
+### 📂 [Proyecto 6: Predicción de Precios Airbnb — Machine Learning]
+> **Stack:** `Python` | `Scikit-Learn` | `XGBoost` | `Pandas` | `Matplotlib` | `Seaborn`
+
+Problema de **regresión supervisada** sobre un dataset real de Airbnb para predecir el precio de alojamientos. El proyecto se ha resuelto de dos formas: una aproximación **manual** y otra **asistida por IA**, con el fin de comparar ambos enfoques metodológicos.
+
+**Highlights:**
+- División train/test desde el inicio para evitar *data leakage*
+- Imputación con `KNNImputer` y codificación con `TargetEncoder`
+- Feature selection con **F-Test** y **Mutual Information** → `Cleaning Fee` y `Security Deposit` como variables más relevantes
+- Comparativa de **7 modelos**: Lasso, Ridge, Decision Tree, Random Forest, Bagging, GBM y SVR
+- Optimización de hiperparámetros con `GridSearchCV` y validación cruzada
+- EDA automatizado generado con IA: informe HTML interactivo con alertas de calidad de datos
+
+---
 
 ## 📊 Tecnologías Destacadas
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
@@ -38,6 +52,8 @@
 ![Jupyter Notebook](https://img.shields.io/badge/jupyter-%23FA0F00.svg?style=for-the-badge&logo=jupyter&logoColor=white)
 ![Markdown](https://img.shields.io/badge/markdown-%23000000.svg?style=for-the-badge&logo=markdown&logoColor=white)
 ![TablePlus]
+![scikit-learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white)
+![XGBoost](https://img.shields.io/badge/XGBoost-%23FF6600.svg?style=for-the-badge&logo=xgboost&logoColor=white)
 
 ---
 
