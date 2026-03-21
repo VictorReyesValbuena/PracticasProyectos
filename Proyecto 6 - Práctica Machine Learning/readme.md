@@ -73,31 +73,37 @@ Se han entrenado y comparado **7 algoritmos** con optimización de hiperparámet
 Defino el alpha vector, los paso por GridSearch, obtengo los parámetro óptimos y hago fit con los datos escalados. El R2 de train y test es bastante parecido y podemos ver que no existe Overfitting.
 
 | Modelo | Escalado | Hiperparámetros principales |
+|---|---|---|
 | **Ridge** | ✅ Sí | `alpha` (rango 10⁻² a 10⁴) |
 
 Defino alpha con un rango alto (el que copié) y empiezo a trabajar sobre él. Veo que el mejor rango para observar el mejor alpha está entre 10-1 y 10-2. Concretamente, me fija el 7.054. Hago el modelo con el valor optimo y  pinto los R2. No es un R2 muy bueno, pero si es cierto que podemos observar que no hay Overfitting.
 
 | Modelo | Escalado | Hiperparámetros principales |
+|---|---|---|
 | **Decision Tree** | ❌ No | `max_depth`, `min_samples_leaf` |
 
 Utilizo datos sin escalar. Sigo el mismo proceso, defino max_depth, le paso por validación cruzada para sacar el mejor parámetro, hago fit sobre ese valor y saco los R2. En los primeros intentos, veo que tiene un Overfitting considerable. Lo que hago es introducir el dato min_sample_leaf, calcular su optimo y volver ha hacer fit para sacar los R2. Aprovecho y saco la importancia de las variables y vemos como "Property Type", "Guests Included" y "Extra People", son las "peores" de hecho la primera de estas ni se ha tenido en cuenta, es un punto negativo de este algoritmo que tiende a no contar con las variables "peores". "Cleaning Fee es la mejor"
 
 | Modelo | Escalado | Hiperparámetros principales |
+|---|---|---|
 | **Random Forest** | ❌ No | `n_estimators`, `max_depth` |
 
 Utilizo datos sin escalar. Antes de realizar la validación cruzada, defino los parametros de mi param_grid, obtengo los mejores parametros y hago la prediccion. Además, grafico la importancia de las Features donde se puede observar que, utilizar todas ellas (al contrario que el arbol de decisión individual que dejaba una sin utilizar), y la que más importancia tienen a la hora de explicar el precio es Cleaning Fee.
 
 | Modelo | Escalado | Hiperparámetros principales |
+|---|---|---|
 | **Bagging Regressor** | ❌ No | `n_estimators` |
 
 Utilizo datos sin escalar. Hago lo mismo, defino mi estimador como DecisionTreeRegressor, saco los parametros optimos y ejecuto el algoritmo con ellos. Obtengo las variables más importantes y la ganadora vuelve a ser Cleaning Fee.
 
 | Modelo | Escalado | Hiperparámetros principales |
+|---|---|---|
 | **Gradient Boosting (GBM)** | ❌ No | `n_estimators`, `learning_rate` |
 
 Defino las NIterations y el learningRate e implemento validación cruzada para encontrar los valores óptimos. Una vez hecho eso, ejecuto el algoritmo, imprimo los r2 de train y test y grafico las variables por importancia. Vuelve a ganar Cleaning fee y se puede ver como también usa todas las variables.
 
 | Modelo | Escalado | Hiperparámetros principales |
+|---|---|---|
 | **SVR** | ✅ Sí | `C`, `gamma` (kernel RBF) |
 
 ---
