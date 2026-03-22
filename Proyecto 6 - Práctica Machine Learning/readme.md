@@ -49,7 +49,7 @@ Lo primero antes de cualquier transformación: split 80/20 con `train_test_split
 
 ### 2. Selección de variables
 Del dataset original se seleccionaron 15 variables relevantes para la predicción del precio:
-`Neighbourhood Cleansed`, `City`, `Country`, `Property Type`, `Room Type`, `Accommodates`, `Bathrooms`, `Security Deposit`, `Cleaning Fee`, `Guests Included`, `Extra People`, `Amenities`, `Availability 365`, `Review Scores Rating`.
+`Neighbourhood Cleansed`, `City`, `Country`, `Property Type`, `Room Type`, `Accommodates`, `Bathrooms`, `Security Deposit`, `Cleaning Fee`, `Guests Included`, `Extra People`, `Availability 365`, `Review Scores Rating`.
 
 ### 3. Análisis exploratorio (EDA)
 - Revisión de tipos de datos, nulos y distribuciones
@@ -64,7 +64,7 @@ Del dataset original se seleccionaron 15 variables relevantes para la predicció
 
 ### 5. Modelado
 
-Se han entrenado y comparado **7 algoritmos** con optimización de hiperparámetros mediante `GridSearchCV` y validación cruzada:
+Se han entrenado y comparado **8 algoritmos** con optimización de hiperparámetros mediante `GridSearchCV` y validación cruzada:
 
 | Modelo | Escalado | Hiperparámetros principales |
 |---|---|---|
@@ -82,19 +82,19 @@ Defino alpha con un rango alto (el que copié) y empiezo a trabajar sobre él. V
 |---|---|---|
 | **Decision Tree** | ❌ No | `max_depth`, `min_samples_leaf` |
 
-Utilizo datos sin escalar. Sigo el mismo proceso, defino max_depth, le paso por validación cruzada para sacar el mejor parámetro, hago fit sobre ese valor y saco los R2. En los primeros intentos, veo que tiene un Overfitting considerable. Lo que hago es introducir el dato min_sample_leaf, calcular su optimo y volver ha hacer fit para sacar los R2. Aprovecho y saco la importancia de las variables y vemos como "Property Type", "Guests Included" y "Extra People", son las "peores", de hecho, no cuenta con la variable "Guests Included", uno de los contras de este tipo de algoritmos que muchas veces, directamente no cuenta con las variables menos importantes. "Cleaning Fee es la mejor"
+Utilizo datos sin escalar. Sigo el mismo proceso, defino max_depth, le paso por validación cruzada para sacar el mejor parámetro, hago fit sobre ese valor y saco los R2. En los primeros intentos, veo que tiene un Overfitting considerable. Lo que hago es introducir el dato min_sample_leaf, calcular su optimo y volver ha hacer fit para sacar los R2. Aprovecho y saco la importancia de las variables y vemos como "Property Type", "Guests Included" y "Extra People", son las "peores". "Cleaning Fee es la mejor"
 
 | Modelo | Escalado | Hiperparámetros principales |
 |---|---|---|
 | **Random Forest** | ❌ No | `n_estimators`, `max_depth` |
 
-Utilizo datos sin escalar. Antes de realizar la validación cruzada, defino los parametros de mi param_grid, obtengo los mejores parametros y hago la prediccion. Además, grafico la importancia de las Features donde se puede observar que, utilizar todas ellas y, la que más importancia tienen a la hora de explicar el precio es Cleaning Fee. Cuenta con todas las variables independientemente de su importancia. A pesar de que luego elegiremos a GMB y XGBoost como las mejores, Random Forest me parece como el algoritmo "todoterreno" por definirle así. Cuenta con todas las variables y a pesar de tener un R2 algo más pequeño, la diferencia entre el r2 de train y test es menor que GMB y XGBoost.
+Utilizo datos sin escalar. Antes de realizar la validación cruzada, defino los parametros de mi param_grid, obtengo los mejores parametros y hago la prediccion. Además, grafico la importancia de las Features donde se puede observar que, utilizar todas ellas y, la que más importancia tienen a la hora de explicar el precio es Cleaning Fee. Cuenta con todas las variables independientemente de su importancia. A pesar de que luego elegiremos a GMB como el mejor, Random Forest me parece que también es un caballo ganador incluso con mayor generalidad. Cuenta con todas las variables y a pesar de tener un R2 algo más pequeño.
 
 | Modelo | Escalado | Hiperparámetros principales |
 |---|---|---|
 | **Bagging Regressor** | ❌ No | `n_estimators` |
 
-Utilizo datos sin escalar. Hago lo mismo, defino mi estimador como DecisionTreeRegressor, saco los parametros optimos y ejecuto el algoritmo con ellos. Obtengo las variables más importantes y la ganadora vuelve a ser Cleaning Fee. Este tiene Overfitting, probablemente por que no he definido algún otro parámetro en tuned_parametres.
+Utilizo datos sin escalar. Hago lo mismo, defino mi estimador como DecisionTreeRegressor, saco los parametros optimos y ejecuto el algoritmo con ellos. Obtengo las variables más importantes y la ganadora vuelve a ser Cleaning Fee. Este tiene Overfitting.
 
 | Modelo | Escalado | Hiperparámetros principales |
 |---|---|---|
@@ -128,15 +128,18 @@ Antes de pasar a las conclusiones, quiero comentar algunas cosas:
 
 ### Modelos lineales (Lasso / Ridge):
 
-Tienen un rendimiento modesto, por lo que podemos decir que la relación entre las features y la variable objetivo no se puede ajustar bien a una relación lineal. A cambio de esto, podemos ver que no existe prácticamente Overfitting. **MODESTO PERO FIABLE.**
+Son las últimas dos opciones. Tienen un rendimiento modesto, por lo que podemos decir que la relación entre las features y la variable objetivo no se puede ajustar bien a una relación lineal. A cambio de esto, podemos ver que no existe prácticamente Overfitting. RESULTADO MODESTO PERO FIABLE.
 
 ### Modelos basados en árboles:
 
-GBM es el modelo más recomendable: mejor equilibrio entre rendimiento (R² test = 0.843) y generalización (ΔR² = 0.047). En la práctica sería la primera elección.
-Luego iría XGBoost y Random Forest (que quizás para mi es el valor seguro) y Decision Tree ya que Bagging tiene claro Overfitting (probablemente podría retocar algo el modelo o los parámetros)
+El mejor R2Test de todos los modelos, lo obtiene el modelo Bagging sin embargo, si consideramos  un ΔR²>0.1 como Overfit, debemos descartarlo. GBM es el modelo más recomendable en cuanto a métricas se refiere, seguido muy de cerca Random Forest Y XGboost. Sin embargo, quizás la mejor elección sería Random Forest ya que, a pesar de tener un menor R2Test, el valor ΔR² es la mitad que para GBM, perderías algo de eficacia a costa de ganar generalidad. 
+En términos de RMSE Test, GBM y Random Forest también son los más precisos (~28-29€ de error medio)."
+**Por cifras, me quedaría con GBM con la condición de fijar el Overfitting por encima del 0,1 pero Random Forest sería una opción también muy válida.**
 
 ### Modelo SVM:
 
-Presenta overfitting sin embargo es por los parámetros que le he definido (con los "habituales" llevaba ejecutándose 2h...)
+Presenta unas métricas en cuento a R2 train y R2 test peores pero sin apenas Overfitting.
+
+
 
 *Práctica realizada en el marco del Bootcamp de Machine Learning — KeepCoding*
