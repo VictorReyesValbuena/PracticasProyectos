@@ -45,7 +45,7 @@ pip install numpy pandas matplotlib seaborn scikit-learn xgboost
 ## 🔍 Descripción de la resolución
 
 ### 1. División train / test
-Lo primero antes de cualquier transformación: split 80/20 con `train_test_split` para evitar *data leakage*. Todas las transformaciones posteriores se aprenden **solo sobre train** y se replican en test (`KNNImputer`, `TargetEncoder` y `StandardScaler`)
+Lo primero antes de cualquier transformación: split 80/20 con `train_test_split`. Todas las transformaciones posteriores se aprenden **solo sobre train** y se replican en test (`KNNImputer`, `TargetEncoder` y `StandardScaler`)
 
 ### 2. Selección de variables
 Del dataset original se seleccionaron 15 variables relevantes para la predicción del precio:
@@ -68,39 +68,43 @@ Se han entrenado y comparado **7 algoritmos** con optimización de hiperparámet
 
 | Modelo | Escalado | Hiperparámetros principales |
 |---|---|---|
-| **Lasso** | ✅ Sí | `alpha` (GridSearch) |
+| **Lasso** | ✅ Sí | `alpha` |
 
 Defino el alpha vector, los paso por GridSearch, obtengo los parámetro óptimos y hago fit con los datos escalados. El R2 de train y test es bastante parecido y podemos ver que no existe Overfitting.
 
 | Modelo | Escalado | Hiperparámetros principales |
 |---|---|---|
-| **Ridge** | ✅ Sí | `alpha` (rango 10⁻² a 10⁴) |
+| **Ridge** | ✅ Sí | `alpha` |
 
-Defino alpha con un rango alto (el que copié) y empiezo a trabajar sobre él. Veo que el mejor rango para observar el mejor alpha está entre 10-1 y 10-2. Concretamente, me fija el 7.054. Hago el modelo con el valor optimo y  pinto los R2. No es un R2 muy bueno, pero si es cierto que podemos observar que no hay Overfitting.
+Defino alpha con un rango alto (el que copié) y empiezo a trabajar sobre él. Veo que el mejor rango para observar el mejor alpha está entre 10-1 y 102. Hago el modelo con el valor optimo y  pinto los R2. No es un R2 muy bueno, pero si es cierto que podemos observar que no hay Overfitting.
 
 | Modelo | Escalado | Hiperparámetros principales |
 |---|---|---|
 | **Decision Tree** | ❌ No | `max_depth`, `min_samples_leaf` |
 
-Utilizo datos sin escalar. Sigo el mismo proceso, defino max_depth, le paso por validación cruzada para sacar el mejor parámetro, hago fit sobre ese valor y saco los R2. En los primeros intentos, veo que tiene un Overfitting considerable. Lo que hago es introducir el dato min_sample_leaf, calcular su optimo y volver ha hacer fit para sacar los R2. Aprovecho y saco la importancia de las variables y vemos como "Property Type", "Guests Included" y "Extra People", son las "peores" de hecho la primera de estas ni se ha tenido en cuenta, es un punto negativo de este algoritmo que tiende a no contar con las variables "peores". "Cleaning Fee es la mejor"
+Utilizo datos sin escalar. Sigo el mismo proceso, defino max_depth, le paso por validación cruzada para sacar el mejor parámetro, hago fit sobre ese valor y saco los R2. En los primeros intentos, veo que tiene un Overfitting considerable. Lo que hago es introducir el dato min_sample_leaf, calcular su optimo y volver ha hacer fit para sacar los R2. Aprovecho y saco la importancia de las variables y vemos como "Property Type", "Guests Included" y "Extra People", son las "peores", de hecho, no cuenta con la variable "Guests Included", uno de los contras de este tipo de algoritmos que muchas veces, directamente no cuenta con las variables menos importantes. "Cleaning Fee es la mejor"
 
 | Modelo | Escalado | Hiperparámetros principales |
 |---|---|---|
 | **Random Forest** | ❌ No | `n_estimators`, `max_depth` |
 
-Utilizo datos sin escalar. Antes de realizar la validación cruzada, defino los parametros de mi param_grid, obtengo los mejores parametros y hago la prediccion. Además, grafico la importancia de las Features donde se puede observar que, utilizar todas ellas (al contrario que el arbol de decisión individual que dejaba una sin utilizar), y la que más importancia tienen a la hora de explicar el precio es Cleaning Fee.
+Utilizo datos sin escalar. Antes de realizar la validación cruzada, defino los parametros de mi param_grid, obtengo los mejores parametros y hago la prediccion. Además, grafico la importancia de las Features donde se puede observar que, utilizar todas ellas y, la que más importancia tienen a la hora de explicar el precio es Cleaning Fee. Cuenta con todas las variables independientemente de su importancia. A pesar de que luego elegiremos a GMB y XGBoost como las mejores, Random Forest me parece como el algoritmo "todoterreno" por definirle así. Cuenta con todas las variables y a pesar de tener un R2 algo más pequeño, la diferencia entre el r2 de train y test es menor que GMB y XGBoost.
 
 | Modelo | Escalado | Hiperparámetros principales |
 |---|---|---|
 | **Bagging Regressor** | ❌ No | `n_estimators` |
 
-Utilizo datos sin escalar. Hago lo mismo, defino mi estimador como DecisionTreeRegressor, saco los parametros optimos y ejecuto el algoritmo con ellos. Obtengo las variables más importantes y la ganadora vuelve a ser Cleaning Fee.
+Utilizo datos sin escalar. Hago lo mismo, defino mi estimador como DecisionTreeRegressor, saco los parametros optimos y ejecuto el algoritmo con ellos. Obtengo las variables más importantes y la ganadora vuelve a ser Cleaning Fee. Este tiene Overfitting, probablemente por que no he definido algún otro parámetro en tuned_parametres.
 
 | Modelo | Escalado | Hiperparámetros principales |
 |---|---|---|
 | **Gradient Boosting (GBM)** | ❌ No | `n_estimators`, `learning_rate` |
 
 Defino las NIterations y el learningRate e implemento validación cruzada para encontrar los valores óptimos. Una vez hecho eso, ejecuto el algoritmo, imprimo los r2 de train y test y grafico las variables por importancia. Vuelve a ganar Cleaning fee y se puede ver como también usa todas las variables.
+
+| Modelo | Escalado | Hiperparámetros principales |
+|---|---|---|
+| **XGBoost** | ❌ No | `n_iterations`, `learning_rate` |
 
 | Modelo | Escalado | Hiperparámetros principales |
 |---|---|---|
@@ -114,20 +118,22 @@ Antes de pasar a las conclusiones, quiero comentar algunas cosas:
 
  -- En cuanto a la metodología a seguir para el desarrollo de la práctica, me he centrado en ejecutar "los pasos correctos" en cada momento. Probablemente no sea la práctica más top a nivel técnico pero he intentado ir paso a paso seguiendo el orden que nos has ido diciendo en las clases sobre cómo se debe implementar el proceso de manera 100% correcta. He quitado algunas columnas de primeras que no tenían ningún valor, he hecho la división train y test, he hecho imputaciones, codificación de variables categoricas (en ambas solo haciendo el fit en train), limpieza general, graficación de variables para el estudio de Outliers, eliminación de los mismos y escalado. He intentado ser conservador en ese sentido, por eso decía que quizás no es la mejor práctica a nivel técnico ya que me he centrado en el proceso.
 
- -- Posteriormente, he implementado cada uno de los algoritmos vistos en clase intentado entender cada uno de los parámetros. Basicamente, he ido copiando cada uno de los código para cada algoritmo (no al 100% pero si la estructura general) y he ido modificando aspectos importantes para que el modelo tuviera mejor resultado, (alpha_vector, max_depth, min_samples_leaf, max_features, n_estimator y learning_rate entre otros). También he utilizando en los métodos de árboles, la graficación de la importancia de cada variable (incluso llegué a eliminar una tras ejecutar por primera vez los algoritmos). En esta parte, básicamente he intentado repasar y profundizar en el funcionamiento de cada uno de los algoritmos.
+ -- Posteriormente, he implementado cada uno de los algoritmos vistos en clase intentado entender cada uno de los parámetros. Basicamente, he ido copiando cada uno de los código para cada algoritmo (no al 100% pero si la estructura que es común) y he ido modificando aspectos importantes para que el modelo tuviera mejor resultado, (alpha_vector, max_depth, min_samples_leaf, max_features, n_estimator y learning_rate entre otros). También he utilizando en los métodos de árboles, la graficación de la importancia de cada variable (incluso llegué a eliminar una tras ejecutar por primera vez los algoritmos). En esta parte, básicamente he intentado repasar y profundizar en el funcionamiento de cada uno de los algoritmos.
 
  -- Al final del todo, le pedí a Claude que me hiciera una tabla comparativa con las métricas **R²** y **RMSE** sobre train y test, incluyendo el gap de overfitting (ΔR²).
+
+ -- Los archivos **OK_EDA_y_limpieza_datos_manual.ipynb** y **OK_ResolucionPractica.ipynb** los he hecho YO sin ayuda de la IA (a expensas de lo último para hacer un cuadro comparativo que lo he indicado) LOS OTROS ARCHIVOS GENERADOS CON IA LO HE HECHO PARA PROBAR Y VER LA VERDADERA UTILIZADA DE CLAUDE PARA HACER ESTE TIPO DE MODELADOS DE MANERA RÁPIDA (En clase alguna vez comentaste que en tu día a día utilizabas Claude y revisabas ya casi no metías código y de ahí que probara a hacer tanto el EDA como lo otro y comparar resultados, tampoco le he dado a Claude unos promps muy currados, solo era por probar)
 
 ## 📊 Conclusiones
 
 ### Modelos lineales (Lasso / Ridge):
 
-Tienen un rendimiento modesto, por lo que podemos decir que la relación entre las features y la variable objetivo no se puede ajustar bien a una relación lineal. A cambio de esto, podemos ver que no existe prácticamente Overfitting.
+Tienen un rendimiento modesto, por lo que podemos decir que la relación entre las features y la variable objetivo no se puede ajustar bien a una relación lineal. A cambio de esto, podemos ver que no existe prácticamente Overfitting. **MODESTO PERO FIABLE.**
 
 ### Modelos basados en árboles:
 
 GBM es el modelo más recomendable: mejor equilibrio entre rendimiento (R² test = 0.843) y generalización (ΔR² = 0.047). En la práctica sería la primera elección.
-Luego iría Random Forest y Decision Tree ya que Bagging tiene claro Overfitting (probablemente podría retocar algo el modelo o los parámetros)
+Luego iría XGBoost y Random Forest (que quizás para mi es el valor seguro) y Decision Tree ya que Bagging tiene claro Overfitting (probablemente podría retocar algo el modelo o los parámetros)
 
 ### Modelo SVM:
 
