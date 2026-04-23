@@ -34,19 +34,16 @@
 ### 📂 [Proyecto 6: Predicción de Precios Airbnb — Machine Learning]
 > **Stack:** `Python` | `Scikit-Learn` | `XGBoost` | `Pandas` | `Matplotlib` | `Seaborn`
 
-Problema de **regresión supervisada** sobre un dataset real de Airbnb para predecir el precio de alojamientos. El proyecto se ha resuelto de dos formas: una aproximación **manual** y otra **asistida por IA**, con el fin de comparar ambos enfoques metodológicos.
+---
 
-**Highlights:**
-- División train/test desde el inicio para evitar *data leakage*
-- Imputación con `KNNImputer` y codificación con `TargetEncoder`
-- Feature selection con **F-Test** y **Mutual Information** → `Cleaning Fee` y `Security Deposit` como variables más relevantes
-- Comparativa de **7 modelos**: Lasso, Ridge, Decision Tree, Random Forest, Bagging, GBM y SVR
-- Optimización de hiperparámetros con `GridSearchCV` y validación cruzada
-- EDA automatizado generado con IA: informe HTML interactivo con alertas de calidad de datos
+
+### 📂 [Proyecto 7: Clasificación Multimodal de Lesiones Cutáneas (HAM10000) — Deep Learning]
+> **Stack:** `Python` | `TensorFlow` | `Keras` | `Transfer Learning` | `CNN` | `Fusión Multimodal`
 
 ---
 
 ## 📊 Tecnologías Destacadas
+
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![R](https://img.shields.io/badge/r-%23276DC3.svg?style=for-the-badge&logo=r&logoColor=white)
 ![Jupyter Notebook](https://img.shields.io/badge/jupyter-%23FA0F00.svg?style=for-the-badge&logo=jupyter&logoColor=white)
@@ -57,10 +54,14 @@ Problema de **regresión supervisada** sobre un dataset real de Airbnb para pred
 ![Seaborn](https://img.shields.io/badge/seaborn-%2300A3E0.svg?style=for-the-badge&logo=python&logoColor=white)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white)
 ![XGBoost](https://img.shields.io/badge/XGBoost-%23FF6600.svg?style=for-the-badge&logo=xgboost&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=tensorflow&logoColor=white)
+![Keras](https://img.shields.io/badge/Keras-%23D00000.svg?style=for-the-badge&logo=keras&logoColor=white)
 
 ---
 
 ## 📬 Contacto
+
 ¿Tienes alguna duda sobre estos proyectos?
+
 * **Perfil de GitHub:** [@VictorReyesValbuena](https://github.com/VictorReyesValbuena)
 * **Correo electrónico:** [victor.reyes.valbuena94@gmail.com]
