@@ -90,6 +90,8 @@ Se construyen **4 modelos** de early-fusion, uno por cada red convolucional. En 
 | 12 | H3 - LF ResNet       | 0.7165 | 0.7118     | +0.0047 | ✅ Ajuste correcto |
 | 13 | H3 - LF CNN          | 0.7074 | 0.7024     | +0.0050 | ✅ Ajuste correcto |
 
+**Se puede ver que los modelos Early Fusion, obtienen unos valores mucho mejores.**
+
 ---
 
 ## 🎯 COMENTARIO ALUMNO
@@ -99,7 +101,7 @@ Se construyen **4 modelos** de early-fusion, uno por cada red convolucional. En 
 	Como comentario final a todo el trabajo desarrollado, decir varias cosas:
 
 	- He desarrollado la práctica en Keras ya que, es más fácil a nivel "código" pero sobre todo he querido detenerme en cada concepto para llevarme de este módulo todos los punto clave bien aprendidos y tenerlo todo claro. Sin embargo, lo estoy empezando a hacer con Pytorch paralelamente siguiendo tu consejo de las clases. 
-	- En cuanto al propio archivo, he intentado optimizar al máximo los modelos. Me surgieron problemas de overfitting en muchos de ellos, he "jugado" con los hiperparámetros (Dropout, learning rate, batch), con las capas de las redes añadiendo capas de BatchNormalization, sustituyendo la capa flatten por GlobalAveragePooling, etc.
+	- En cuanto al propio archivo, he intentado optimizar al máximo los modelos. Me surgieron problemas de overfitting en muchos de ellos, he "jugado" con los hiperparámetros (Dropout, learning rate, batch), con las capas de las redes añadiendo capas de BatchNormalization, sustituyendo la capa flatten por GlobalAveragePooling, etc. He intentado aplicar los conceptos trabajados en clase y en los cuadernos.
 	- Basicamente, me he centrado en presentar unos modelos consistentes y en entender el funcionamiento de late y early fusión además de las formas de "conectar" ambas partes (la tabular y las de imágenes). Se que no es un trabajo "espectacular" pero ya te digo que en lo que me he centrado es en tener los conceptos claros.
 	- El readme, lo he hecho al 50% con IA para seguir el formato de todo el repositorio y para que quedara más vistoso.
 
