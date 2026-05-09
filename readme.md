@@ -42,6 +42,11 @@
 
 ---
 
+### 📂 [Proyecto 8: Sistema de Cierre Fiscal Inteligente — Prompt Engineering & LLMs]
+> **Stack:** `Python` | `Pandas` | `Google Gemini API` | `Prompt Engineering (CO-STAR)` | `LLMs`
+
+---
+
 ## 📊 Tecnologías Destacadas
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
@@ -56,6 +61,7 @@
 ![XGBoost](https://img.shields.io/badge/XGBoost-%23FF6600.svg?style=for-the-badge&logo=xgboost&logoColor=white)
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=tensorflow&logoColor=white)
 ![Keras](https://img.shields.io/badge/Keras-%23D00000.svg?style=for-the-badge&logo=keras&logoColor=white)
+![Google Gemini](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white)
 
 ---
 
